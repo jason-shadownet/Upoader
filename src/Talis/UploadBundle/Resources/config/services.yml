@@ -1,0 +1,19 @@
+services:
+#    upload.example:
+#        class: Talis\UploadBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
+
+     app.annotation_reader:
+          class: Talis\UploadBundle\Annotation\UploadAnnotationReader
+          arguments: ["@annotations.reader"]
+
+
+     app.upload_handler:
+         class: Talis\UploadBundle\Handler\UploadHandler
+
+
+     app.upload_subscriber:
+         class: Talis\UploadBundle\Listener\UploadSubscriber
+         arguments: ["@app.annotation_reader" , "@app.upload_handler"]
+         tags:
+            - { name: doctrine.event_subscriber, connexion: default }
